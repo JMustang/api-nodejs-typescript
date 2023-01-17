@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 // Cors
 app.use(
   cors({
-    origin: ["http://localhost:3300"],
+    origin: ["http://localhost:3300", '*'],
   })
 );
 

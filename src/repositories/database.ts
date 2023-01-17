@@ -6,8 +6,8 @@ const SQL_ITENS_CREATE = `
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
-        last_name TEXT,
-    )
+        last_name TEXT
+    );
 `;
 
 const database = new sqlite3.Database(DBSOURCE, (err) => {
@@ -19,6 +19,7 @@ const database = new sqlite3.Database(DBSOURCE, (err) => {
     database.run(SQL_ITENS_CREATE, (err) => {
       if (err) {
         // Possivelmente a tabela já foi criada
+        console.log(err)
       } else {
         console.log("Tabela users criada com sucesso!!!");
       }
