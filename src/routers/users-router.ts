@@ -11,10 +11,9 @@ usersRouter.post("/users", (req, res) => {
     if (id) {
       res
         .status(201)
-        .location(`/users/${id}`)
-        .send({ msg: "User created successfully!" });
+        .send({ message: "User created successfully!" });
     } else {
-      res.status(400).send({ error: "User not created!" });
+      res.status(400).send({ message: "User not created!", error: true });
     }
   });
 });
@@ -31,7 +30,7 @@ usersRouter.get("/users/:id", (req, res) => {
     if (user) {
       res.json(user);
     } else {
-      res.status(404).send();
+      res.status(404).send({ message: 'User not found', error: true });
     }
   });
 });
@@ -41,9 +40,12 @@ usersRouter.put("/users/:id", (req, res) => {
   const id: number = +req.params.id;
   usersRepository.update(id, req.body, (notFound) => {
     if (notFound) {
-      res.status(404).send();
+      res.status(404).send({ message: 'User not found', error: true });
     } else {
-      res.status(204).send();
+      res.status(200).send({
+        message: 'User updated successfully',
+        error: false
+      });
     }
   });
 });
@@ -53,9 +55,12 @@ usersRouter.delete("/users/:id", (req, res) => {
   const id: number = +req.params.id;
   usersRepository.delete(id, (notFound) => {
     if (notFound) {
-      res.status(404).send();
+      res.status(404).send({ message: 'User not found', error: true });
     } else {
-      res.status(204).send();
+      res.status(200).send({
+        message: 'User deleted successfully',
+        error: false
+      });
     }
   });
 });
